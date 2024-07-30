@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion Analysis</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: left; /* 左揃えに変更 */
+            margin: 0 auto; /* 中央に配置 */
+            display: inline-block; /* コンテンツ幅に合わせる */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Emotion Analysis</h1>
+        <form method="post">
+            <label for="text">Enter text:</label>
+            <textarea id="text" name="text" rows="4" cols="50">{{ text | safe }}</textarea>
+            <br>
+            <input type="submit" value="Analyze">
+        </form>
+
+        {% if result %}
+            <h2>Result:</h2>
+            <pre class="result">
+            {% for emotion, score in score_dict.items() %}
+                {{ emotion }}: {{ score }}
+            {% endfor %}
+            </pre>
+            <h2>Score:</h2>
+            <p>{{ score }}</p>
+            <h2>Recommended Music:</h2>
+            <ul>
+            {% for track in recommended_music %}
+                <li><a href="{{ track.url }}" target="_blank">{{ track.name }} by {{ track.artist }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
